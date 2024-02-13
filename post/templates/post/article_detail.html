@@ -1,0 +1,45 @@
+{% extends 'post/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="article-body">
+        <h1>{{ article.title }}</h1>
+
+        <img src="{{ article.image }}" alt="">
+
+        <p>{{ article.content }}</p> 
+        {% if category_list %}
+        <p>Categories: 
+            {% for c in category_list %}
+            <a href="{% url 'category' c %}">{{ c }}</a>
+            {% endfor %}
+        </p>   
+        {% endif %}
+    </div>
+    <div class="comment-form">
+        <h4>Comments</h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for f in form %}
+                <p>{{ f }}</p>
+            {% endfor %}
+            <button type="submit" class="btn waves-effect">Send</button>
+        </form>    
+    </div>
+    {% if comment_list %}
+    <div id="comments">
+        {% for c in comment_list %}
+            <div class="card" id="c{{ c.pk }}">
+                <a name="{{ c.pk }}"></a>
+                <div class="comment-header">
+                    <span>{{ c.author }}</span>
+                    <span>{{ c.date|timesince }} ago</span>
+                </div>
+                <p>{{ c.content }}</p>
+            </div>
+        {% endfor %}    
+    </div>
+    {% endif %}
+    <script src="{% static 'post/js/comment_highlighting.js' %}">
+    </script>
+{% endblock %}

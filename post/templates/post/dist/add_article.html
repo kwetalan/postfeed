@@ -1,0 +1,33 @@
+{% extends 'post/base.html' %}
+{% load static %}
+
+{% block content %}
+    <form method="post" action="{% url 'addarticle' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% for f in form %}
+            {% if f.label == 'Image' %}
+            <p>
+                <label class="input-file" for="{{ f.id_for_label }}">
+                    {{ f }}
+                    <span class="btn">Select image</span>
+                </label>
+            </p>
+                
+            {% elif f.label == 'Category' %}
+                {{ f }}
+            {% else %}
+            <p>
+                <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                {{ f }} 
+            </p>
+            {% endif %}
+        {% endfor %}
+        <label for="">Category</label>
+        <input type="text" id="input_cat"><button type="button" class="btn" id="add_cat">+</button>
+        <ul id="ul_cat"></ul>
+        <button class="btn waves-effect" type="submit">Send</button>
+    </form>
+    <script src="{% static 'post/js/add_article.js' %}">
+    </script>
+{% endblock %}

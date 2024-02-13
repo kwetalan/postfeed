@@ -1,0 +1,9 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+    <h1>Articles from category {{ category }}</h1>
+    {% for a in article_list %}
+        <h2><a href="{% url 'article' a.slug %}">{{ a }}</a></h2>
+        <p>{{ a.content|truncatechars:90 }}</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'post/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+          <a href="{% url 'home' %}" class="brand-logo">Limrut</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+              <form action="{% url 'search' %}">
+                {% csrf_token %}
+                {% for f in search_form %}
+                  {{ f }}
+                {% endfor %}
+              </form>  
+              <ul id="res"></ul>
+            </li>
+            {% if is_auth %}
+              <li>
+                <a href="{% url 'profile' %}">{{ user }}</a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{% url 'signup' %}">sign up</a>
+              </li>
+              <li>
+                <a href="{% url 'login' %}">log in</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+      <div class="main">
+        <div class="tab">
+          <h2>Categories</h2>
+          {% for c in cats %}
+            <p><a href="{% url 'category' c.slug %}">{{ c.name }}</a></p>
+          {% endfor %}
+        </div>
+        <div class="content">
+          {% block content %}
+          {% endblock %}    
+        </div>  
+      </div>
+      <script src="{% static 'post/js/search.js' %}">
+      </script>
+</body>
+</html>

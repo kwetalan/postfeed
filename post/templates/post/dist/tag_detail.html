@@ -1,0 +1,10 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+    <h1>{{ tag }}</h1>
+    <h2>{{ tag.pk }}</h2>
+    <p>{{ tag.slug }}</p>
+    {% for p in post_list %}
+        {{ p }}
+    {% endfor %}
+{% endblock %}

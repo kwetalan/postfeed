@@ -1,0 +1,10 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+<h1>{{ user }}</h1>
+<h2>Comments</h2>
+{% for c in comment_list %}
+    <h3><a href="{% url 'article' c.article.slug %}#{{ c.pk }}">{{ c.article }}</a></h3>
+    {{ c.content }}
+{% endfor %}
+{% endblock %}

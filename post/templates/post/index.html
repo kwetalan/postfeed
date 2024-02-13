@@ -1,0 +1,36 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+{% if is_admin %}
+<a href="{% url 'addarticle' %}"><button class="btn">Add Article</button></a>
+{% endif %}
+{% for i in object_list %}
+    <h1><a href="{% url 'article' i.slug %}">{{ i.title }}</a></h1>
+    {{ i.content }}
+{% endfor %}
+{% if page_obj.has_other_pages %}
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+        {% else %}
+        <li class="disabled"><i class="material-icons">chevron_left</i></li>
+        {% endif %}
+        {% for p in paginator.page_range %}
+            {% if page_obj.number == p %}
+                    <li class="active">
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                {% else %}
+                    <li class="waves-effect">
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    </li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+        {% else %}
+        <li class="disabled"><i class="material-icons">chevron_right</i></li>
+        {% endif %}
+    </ul>
+{% endif %}
+{% endblock %}
